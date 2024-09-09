@@ -189,7 +189,15 @@ app.post("/api/v1/calculate-mortgage", (req, res) => {
       annualInterestRate
     );
 
-    res.status(200).json({ payment: payment });
+    const paymentScheduleMap = {
+      abw: "Accelerated Bi-Weekly",
+      bw: "Bi-Weekly",
+      m: "Monthly",
+    };
+    res.status(200).json({
+      payment: payment,
+      paymentSchedule: paymentScheduleMap[paymentSchedule],
+    });
   } catch (error) {
     console.error("Error calculating mortgage:", error);
     res.status(500).json({ error: error.message || "Internal server error" });

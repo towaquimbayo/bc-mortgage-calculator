@@ -45,8 +45,8 @@ function autofill(e) {
 }
 
 /**
- * Attaches the event listener to the calculate mortgage button
- * upon page load.
+ * On page load, attach the event listener to the calculate
+ * mortgage button and autofill button.
  */
 window.onload = () => {
   const calculateMortgageBtn = document.getElementById("calculateBtn");

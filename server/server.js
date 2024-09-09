@@ -100,6 +100,41 @@ function calculateCMHCPremium(propertyPrice, downPayment) {
   return (propertyPrice - downPayment) * cmhcRate;
 }
 
+/**
+ * Calculate mortgage payment based on payment schedule and amortization period.
+ * @param {Number} totalMortgage - total mortgage loan amount
+ * @param {String} paymentSchedule - payment schedule ('abw' = accelerated bi-weekly, 'bw' = bi-weekly, 'm' = monthly)
+ * @param {Number} amortizationPeriod - amortization period (5 years increments between 5 and 30 years)
+ * @param {Number} annualInterestRate - annual interest rate
+ * @returns {Number} - mortgage payment per period
+ */
+function calculateMortgagePayment(
+  totalMortgage,
+  paymentSchedule,
+  amortizationPeriod,
+  annualInterestRate
+) {
+  const numPaymentsPerYear = paymentSchedule === "bw" ? 26 : 12;
+  const totalNumPayments = amortizationPeriod * numPaymentsPerYear;
+  const peroidicInterestRate = annualInterestRate / 100 / numPaymentsPerYear;
+  let payment =
+    (totalMortgage *
+      (peroidicInterestRate *
+        Math.pow(1 + peroidicInterestRate, totalNumPayments))) /
+    (Math.pow(1 + peroidicInterestRate, totalNumPayments) - 1);
+
+  // accelerated bi-weekly payment is half of monthly payment made 26 times per year
+  if (paymentSchedule === "abw") payment /= 2;
+
+  console.log({
+    numPaymentsPerYear,
+    totalNumPayments,
+    peroidicInterestRate,
+    payment,
+  });
+
+  return Number(payment.toFixed(2));
+}
 app.post("/api/v1/calculate-mortgage", (req, res) => {
   try {
     const {
@@ -126,6 +161,17 @@ app.post("/api/v1/calculate-mortgage", (req, res) => {
 
     // calculate CMHC insurance premium if applicable
     const cmhcPremium = calculateCMHCPremium(propertyPrice, downPayment);
+
+    // calculate total mortgage payment
+    const mortgageAmount = propertyPrice - downPayment + cmhcPremium;
+
+    // calculate periodic mortgage payment based on payment schedule
+    const payment = calculateMortgagePayment(
+      mortgageAmount,
+      paymentSchedule,
+      amortizationPeriod,
+      annualInterestRate
+    );
 
     res.status(200).json({ payment: payment });
   } catch (error) {

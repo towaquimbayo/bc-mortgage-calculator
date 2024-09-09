@@ -135,6 +135,18 @@ function calculateMortgagePayment(
 
   return Number(payment.toFixed(2));
 }
+
+/**
+ * Calculate BC mortgage with CMHC insurance.
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @requires propertyPrice - Property price
+ * @requires downPayment - Down payment
+ * @requires annualInterestRate - Annual interest rate
+ * @requires amortizationPeriod - Amortization period (5 years increments between 5 and 30 years)
+ * @requires paymentSchedule - Payment schedule ('abw' = accelerated bi-weekly, 'bw' = bi-weekly, 'm' = monthly)
+ * @returns {Object} - JSON response
+ */
 app.post("/api/v1/calculate-mortgage", (req, res) => {
   try {
     const {

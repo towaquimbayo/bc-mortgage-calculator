@@ -97,3 +97,15 @@ form button:hover {
   display: none;
   margin-top: 1rem;
 }
+
+@media screen and (max-width: 600px) {
+  body {
+    padding: 2rem 1rem;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  form .form-group {
+    flex-direction: column;
+  }
+}

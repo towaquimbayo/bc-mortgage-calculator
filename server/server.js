@@ -1,8 +1,10 @@
 const express = require("express");
+const cors = require("cors");
 
 const PORT = 3000;
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 /**
  * Validate mortgage parameters.
@@ -176,6 +178,8 @@ app.post("/api/v1/calculate-mortgage", (req, res) => {
 
     // calculate total mortgage payment
     const mortgageAmount = propertyPrice - downPayment + cmhcPremium;
+
+    console.log({ cmhcPremium, mortgageAmount });
 
     // calculate periodic mortgage payment based on payment schedule
     const payment = calculateMortgagePayment(

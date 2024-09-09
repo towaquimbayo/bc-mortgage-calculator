@@ -88,6 +88,11 @@ form button:hover {
   background-color: #007175;
 }
 
+.btn-group {
+  display: flex;
+  gap: 1rem;
+}
+
 #result {
   display: none;
   margin-top: 1rem;

@@ -32,10 +32,25 @@ function calculateMortgage(e) {
 }
 
 /**
+ *  Autofill form inputs with default values.
+ * @param {Event} e - form submit event
+ */
+function autofill(e) {
+  e.preventDefault();
+  document.getElementById("propertyPrice").value = 300000;
+  document.getElementById("downPayment").value = 42000;
+  document.getElementById("annualInterestRate").value = 4.19;
+  document.getElementById("amortizationPeriod").value = 25;
+  document.getElementById("paymentSchedule").value = "m";
+}
+
+/**
  * Attaches the event listener to the calculate mortgage button
  * upon page load.
  */
 window.onload = () => {
   const calculateMortgageBtn = document.getElementById("calculateBtn");
+  const autofillBtn = document.getElementById("autofillBtn");
   calculateMortgageBtn.addEventListener("click", calculateMortgage);
+  autofillBtn.addEventListener("click", autofill);
 };

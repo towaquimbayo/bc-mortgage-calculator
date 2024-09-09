@@ -72,6 +72,34 @@ function mortgageParamValidation(
   return null;
 }
 
+/**
+ * Calculate BC mortgage with CMHC insurance.
+ * @param {Number} propertyPrice - Property price
+ * @param {Number} downPayment - Down payment
+ * @returns {Number} - CMHC premium
+ */
+function calculateCMHCPremium(propertyPrice, downPayment) {
+  const downPaymentPercentage = (downPayment / propertyPrice) * 100;
+  let cmhcRate = 0;
+
+  // check if down payment is at least 5% of property price
+  if (downPaymentPercentage < 5) {
+    throw Error("Down payment must be at least 5% of property price.");
+  }
+
+  if (downPaymentPercentage >= 5 && downPaymentPercentage < 10) {
+    cmhcRate = 0.04;
+  } else if (downPaymentPercentage >= 10 && downPaymentPercentage < 15) {
+    cmhcRate = 0.031;
+  } else if (downPaymentPercentage >= 15 && downPaymentPercentage < 20) {
+    cmhcRate = 0.028;
+  } else {
+    cmhcRate = 0; // no CMHC premium
+  }
+
+  return (propertyPrice - downPayment) * cmhcRate;
+}
+
 app.post("/api/v1/calculate-mortgage", (req, res) => {
   try {
     const {
@@ -95,6 +123,9 @@ app.post("/api/v1/calculate-mortgage", (req, res) => {
       res.status(400).json({ error: isParamValid });
       return;
     }
+
+    // calculate CMHC insurance premium if applicable
+    const cmhcPremium = calculateCMHCPremium(propertyPrice, downPayment);
 
     res.status(200).json({ payment: payment });
   } catch (error) {

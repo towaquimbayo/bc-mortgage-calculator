@@ -1,3 +1,5 @@
 # BC Mortgage Calculator
 
-BC Mortgage Calculator with CMHC insurance built using Node.js, Express.js, Jest testing framework, and HTML5/CSS3.
+An online mortgage calculator for the British Columbia (BC) with CMHC insurance premium. Built with Node.js, Express.js, Jest testing framework, and HTML5/CSS3.
+
+_Check out the live project [_here_](https://mortgage-calculator.towaquimbayo.com/)._

@@ -207,3 +207,6 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () =>
   console.log(`Server listening at http://localhost:${PORT}`)
 );
+
+// Export the app for testing
+module.exports = app;

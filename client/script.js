@@ -1,11 +1,13 @@
 /**
- * Calculate mortgage based on inputs:
+ * Calculate mortgage with CMHC insurance.
  * @param {Event} e - form submit event
  */
 function calculateMortgage(e) {
   e.preventDefault();
   const endpoint = "http://localhost:3000/api/v1/calculate-mortgage";
   const result = document.getElementById("result");
+
+  result.style.display = "block";
 
   fetch(endpoint, {
     method: "POST",
@@ -19,7 +21,13 @@ function calculateMortgage(e) {
     }),
   })
     .then((response) => response.json())
-    .then((data) => (result.innerHTML = JSON.stringify(data)))
+    .then((data) => {
+      const isError = data.error;
+      result.style.color = isError ? "#ff0033" : "#00cc66";
+      result.innerHTML = isError
+        ? `Error: ${data.error}`
+        : `$${data.payment} ${data.paymentSchedule}`;
+    })
     .catch((error) => console.error("Error:", error));
 }
 

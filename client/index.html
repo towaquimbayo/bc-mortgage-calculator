@@ -3,33 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Benji Pays Tech Assessment</title>
+    <title>BC Mortgage Calculator</title>
+    <link href="styles.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div>
-      <h1>Client</h1>
+    <header>
+      <h1>BC Mortgage Calculator</h1>
+      <p><i>Benji Pays Tech Assessment 2024 - Towa Quimbayo</i></p>
+    </header>
 
-      <form>
-        <label for="propertyPrice">Property price:</label>
-        <input type="text" id="propertyPrice" name="propertyPrice" />
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <label for="propertyPrice">Property Price</label>
+          <input
+            type="number"
+            min="0"
+            step="10000"
+            id="propertyPrice"
+            name="propertyPrice"
+            required
+          />
+        </div>
 
-        <label for="downPayment">Down payment:</label>
-        <input type="text" id="downPayment" name="downPayment" />
+        <div class="input-group">
+          <label for="downPayment">Down Payment</label>
+          <input
+            type="text"
+            id="downPayment"
+            name="downPayment"
+            min="0"
+            step="1000"
+            required
+          />
+        </div>
+      </div>
 
-        <label for="annualInterestRate">Annual interest rate:</label>
-        <input type="text" id="annualInterestRate" name="annualInterestRate" />
+      <div class="form-group">
+        <div class="input-group">
+          <label for="annualInterestRate">Annual Interest Rate</label>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            max="100"
+            id="annualInterestRate"
+            name="annualInterestRate"
+            required
+          />
+        </div>
 
-        <label for="amortizationPeriod">Amortization period:</label>
-        <input type="text" id="amortizationPeriod" name="amortizationPeriod" />
+        <div class="input-group">
+          <label for="amortizationPeriod">Amortization Period</label>
+          <input
+            type="number"
+            min="5"
+            max="30"
+            step="1"
+            id="amortizationPeriod"
+            name="amortizationPeriod"
+            required
+          />
+        </div>
+      </div>
 
-        <label for="paymentSchedule">Payment schedule:</label>
-        <input type="text" id="paymentSchedule" name="paymentSchedule" />
+      <div class="form-group">
+        <div class="input-group">
+          <label for="paymentSchedule">Payment schedule</label>
+          <select id="paymentSchedule" name="paymentSchedule" required>
+            <option value="bw">Bi-Weekly</option>
+            <option value="abw">Accelerated Bi-Weekly</option>
+            <option value="m">Monthly</option>
+          </select>
+        </div>
+      </div>
 
-        <button id="calculateBtn">Calculate Mortgage</button>
-      </form>
+        <button id="calculateBtn">Calculate</button>
 
+       
       <div id="result"></div>
-    </div>
+    </form>
 
     <script src="script.js" type="text/javascript"></script>
   </body>

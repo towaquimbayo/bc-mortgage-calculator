@@ -8,6 +8,8 @@ function calculateMortgage(e) {
   const result = document.getElementById("result");
 
   result.style.display = "block";
+  result.innerHTML = "Calculating...";
+  result.style.color = "#b9b9b9";
 
   fetch(endpoint, {
     method: "POST",
